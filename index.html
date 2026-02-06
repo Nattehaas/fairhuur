@@ -3,17 +3,39 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FairHuur - Eerlijk huren zonder abonnement</title>
-  <meta name="description" content="FairHuur. Huurwoningen zonder paywall. Alle info en contactgegevens direct beschikbaar. Gratis reageren en gratis plaatsen." />
+  <title>FairHuur. Gratis huurwoningen zonder abonnement. Direct contact</title>
+  <meta name="description" content="Vind huurwoningen zonder abonnement of paywall. Alle contactgegevens direct zichtbaar. Gratis reageren en gratis plaatsen. Eerlijk huren begint hier." />
+  <link rel="canonical" href="https://fairhuur.ai/" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="FairHuur. Gratis huurwoningen zonder abonnement" />
+  <meta property="og:description" content="Geen paywall. Geen verborgen contactgegevens. Gewoon direct contact met de verhuurder. Gratis." />
+  <meta property="og:url" content="https://fairhuur.ai/" />
+  <meta property="og:site_name" content="FairHuur" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="FairHuur. Gratis huurwoningen zonder abonnement" />
+  <meta name="twitter:description" content="Direct contact met verhuurders. Gratis reageren en gratis plaatsen." />
+
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/styles.css" />
   <script defer src="/app.js"></script>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "name":"FairHuur",
+    "url":"https://fairhuur.ai/",
+    "description":"Huurwoningen zonder abonnement. Alle contactgegevens direct zichtbaar. Gratis reageren en gratis plaatsen."
+  }
+  </script>
 </head>
 <body>
   <header class="site-header">
     <div class="container">
       <a class="brand" href="/">
-        <span class="brand-mark" aria-hidden="true">🏠</span>
+        <img class="brand-logo" src="/assets/logo.svg" alt="FairHuur" width="34" height="34" />
         <span class="brand-name">FairHuur</span>
       </a>
       <nav class="nav">
@@ -28,34 +50,42 @@
     <section class="hero">
       <div class="container hero-grid">
         <div class="hero-copy">
-          <h1>Eerlijk huren, zonder abonnement.</h1>
+          <h1>Huurwoningen zonder abonnement.</h1>
           <p class="lead">
-            Geen paywall. Geen verborgen contactgegevens. Gewoon woningen met alle info direct zichtbaar.
+            De meeste platforms vragen geld om überhaupt te mogen reageren. Dat vinden wij onzin.
+            Bij FairHuur zie je alle info direct en neem je meteen contact op met de verhuurder. Gratis.
           </p>
+
+          <ul class="checklist" aria-label="Voordelen">
+            <li>Geen abonnementskosten</li>
+            <li>Contactgegevens direct zichtbaar</li>
+            <li>Gratis reageren op elke woning</li>
+            <li>Gratis plaatsen voor verhuurders</li>
+            <li>Geen account nodig</li>
+          </ul>
+
           <div class="hero-actions">
             <a class="btn btn-primary" href="#woningen">Bekijk woningen</a>
             <a class="btn btn-ghost" href="/submit.html">Plaats gratis een woning</a>
           </div>
-          <div class="hero-badges" aria-label="Voordelen">
-            <span class="badge">Gratis reageren</span>
-            <span class="badge">Direct contact</span>
-            <span class="badge">Geen account nodig</span>
-          </div>
+
           <p class="tiny note">
-            Disclaimer: FairHuur is een onafhankelijke directory. Controleer altijd identiteit en contracten. We tonen contactgegevens zoals aangeleverd.
+            Veiligheid: betaal nooit vooraf zonder contract. Check altijd identiteit en adres. We tonen contactgegevens zoals aangeleverd.
           </p>
         </div>
+
         <div class="hero-card">
           <div class="card">
             <div class="card-header">
-              <h2>Zoek slim</h2>
-              <p class="muted">Filter op plaats, type en prijs.</p>
+              <h2>Zoeken en filteren</h2>
+              <p class="muted">Zoek op plaats, type, prijs en meer.</p>
             </div>
             <div class="card-body">
               <label class="field">
                 <span>Zoek</span>
                 <input id="q" type="search" placeholder="Bijv. Den Haag, studio, balkon" autocomplete="off" />
               </label>
+
               <div class="grid-2">
                 <label class="field">
                   <span>Plaats</span>
@@ -72,16 +102,38 @@
                   </select>
                 </label>
               </div>
+
               <div class="grid-2">
+                <label class="field">
+                  <span>Min. prijs (p/m)</span>
+                  <input id="minPrice" type="number" min="0" step="50" placeholder="Bijv. 800" />
+                </label>
                 <label class="field">
                   <span>Max. prijs (p/m)</span>
                   <input id="maxPrice" type="number" min="0" step="50" placeholder="Bijv. 1500" />
                 </label>
+              </div>
+
+              <div class="grid-2">
                 <label class="field">
                   <span>Min. m²</span>
                   <input id="minSqm" type="number" min="0" step="5" placeholder="Bijv. 40" />
                 </label>
+                <label class="field">
+                  <span>Min. slaapkamers</span>
+                  <input id="minBeds" type="number" min="0" step="1" placeholder="Bijv. 2" />
+                </label>
               </div>
+
+              <label class="field">
+                <span>Sorteren</span>
+                <select id="sort">
+                  <option value="newest">Nieuwste eerst</option>
+                  <option value="price_asc">Prijs: laag naar hoog</option>
+                  <option value="price_desc">Prijs: hoog naar laag</option>
+                  <option value="sqm_desc">Oppervlakte: groot naar klein</option>
+                </select>
+              </label>
 
               <div class="actions-row">
                 <button id="resetFilters" class="btn btn-ghost" type="button">Reset</button>
@@ -89,6 +141,7 @@
               </div>
             </div>
           </div>
+
           <div class="mini-stats">
             <div class="mini-stat">
               <span class="mini-stat-label">Live</span>
@@ -110,7 +163,7 @@
     <section id="woningen" class="section">
       <div class="container">
         <div class="section-head">
-          <h2>Woningen</h2>
+          <h2>Huurwoningen</h2>
           <div class="section-actions">
             <a class="btn btn-ghost" href="/submit.html">+ Plaats woning</a>
           </div>
@@ -122,6 +175,16 @@
           <h3>Geen resultaten</h3>
           <p class="muted">Pas je filters aan of reset ze.</p>
         </div>
+
+        <div class="note-box" style="margin-top:16px">
+          <h3>Ken je een woning?</h3>
+          <p class="muted" style="margin-top:8px">
+            Plaats hem gratis. Hoe meer aanbod, hoe beter dit werkt voor iedereen.
+          </p>
+          <div class="hero-actions" style="margin-top:10px">
+            <a class="btn btn-primary" href="/submit.html">Plaats gratis een woning</a>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -130,15 +193,16 @@
     <div class="container footer-grid">
       <div>
         <div class="brand brand-footer">
-          <span class="brand-mark" aria-hidden="true">🏠</span>
+          <img class="brand-logo" src="/assets/logo.svg" alt="FairHuur" width="34" height="34" />
           <span class="brand-name">FairHuur</span>
         </div>
-        <p class="muted tiny">Eerlijk huren. Zonder abonnement.</p>
+        <p class="muted tiny">Eerlijk huren, zonder abonnement.</p>
       </div>
       <div class="footer-links">
         <a href="/about.html">Waarom FairHuur</a>
         <a href="/submit.html">Woning plaatsen</a>
         <a href="/privacy.html">Privacy</a>
+        <a href="/launch-linkedin.html">Launch post</a>
       </div>
       <div class="muted tiny footer-note">
         Tip: Deel FairHuur met je netwerk. Hoe meer aanbod, hoe beter.

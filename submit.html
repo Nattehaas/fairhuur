@@ -12,7 +12,7 @@
   <header class="site-header">
     <div class="container">
       <a class="brand" href="/">
-        <span class="brand-mark" aria-hidden="true">🏠</span>
+        <img class="brand-logo" src="/assets/logo.svg" alt="FairHuur" width="34" height="34" />
         <span class="brand-name">FairHuur</span>
       </a>
       <nav class="nav">
@@ -26,36 +26,39 @@
     <div class="container narrow">
       <h1>Plaats gratis een woning</h1>
       <p class="muted">
-        MVP versie: je stuurt de info via een formulier. Wij zetten het zo snel mogelijk live.
+        Dit is de MVP versie. Je plaatst via een formulier, wij zetten de woning daarna live.
       </p>
 
       <div class="card">
         <div class="card-body">
           <h2>Formulier</h2>
-          <p class="muted">Maak een Google Form en plak hier de link.</p>
-          <ol class="bullets">
-            <li>Open Google Forms en maak een formulier.</li>
-            <li>Velden: titel, plaats, prijs, m², type, beschrijving, contact, foto.</li>
-            <li>Plak de link hieronder in de knop.</li>
-          </ol>
+          <p class="muted">Vervang de link van de knop hieronder met jouw Google Form.</p>
 
-          <div class="callout">
-            <div class="callout-title">Snelste hack</div>
+          <div class="hero-actions" style="margin-top:16px">
+            <a class="btn btn-primary" href="https://forms.gle/" target="_blank" rel="noopener">Open formulier</a>
+            <a class="btn btn-ghost" href="/#woningen">Terug</a>
+          </div>
+
+          <div class="callout" style="margin-top:14px">
+            <div class="callout-title">Tip</div>
             <div class="callout-body">
-              Wil je het nu al gebruiken voordat je formulier af is? Laat mensen je mailen:
+              Formulier nog niet af? Laat mensen je mailen, dan voeg je het handmatig toe.
               <div class="mono" style="margin-top:8px">plaatsing@fairhuur.ai</div>
             </div>
           </div>
 
-          <div class="hero-actions" style="margin-top:16px">
-            <a class="btn btn-primary" href="#" onclick="alert('Plak hier straks je Google Form link in submit.html'); return false;">Open formulier</a>
-            <a class="btn btn-ghost" href="/#woningen">Terug</a>
-          </div>
+          <h3 style="margin-top:18px">Wat we nodig hebben</h3>
+          <ul class="bullets">
+            <li>Titel, plaats, prijs, m², type</li>
+            <li>Beschikbaarheid en korte beschrijving</li>
+            <li>Minstens 1 contactoptie, mail of telefoon</li>
+            <li>Foto link of upload</li>
+          </ul>
         </div>
       </div>
 
       <p class="tiny note">
-        Door te plaatsen ga je akkoord dat je gegevens worden getoond op de site.
+        Door te plaatsen ga je akkoord dat de gegevens worden getoond op de site.
       </p>
     </div>
   </main>
@@ -64,6 +67,7 @@
     <div class="container footer-grid">
       <div class="footer-links">
         <a href="/privacy.html">Privacy</a>
+        <a href="/launch-linkedin.html">Launch post</a>
       </div>
     </div>
   </footer>

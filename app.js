@@ -31,12 +31,21 @@ function calcStats(listings){
   return { live, today, avg };
 }
 
+function escapeHtml(str){
+  return (str || '').toString()
+    .replaceAll('&','&amp;')
+    .replaceAll('<','&lt;')
+    .replaceAll('>','&gt;')
+    .replaceAll('"','&quot;')
+    .replaceAll("'","&#039;");
+}
+
 function listingCard(l){
   const img = l.imageUrl ? `<img src="${l.imageUrl}" alt="Foto van ${escapeHtml(l.title || 'woning')}" loading="lazy">` : '';
   const type = l.type || 'Woning';
   const city = l.city || '';
   const sqm = l.sqm ? `${l.sqm} m²` : '';
-  const beds = l.bedrooms ? `${l.bedrooms} slk` : '';
+  const beds = (Number.isFinite(Number(l.bedrooms)) && Number(l.bedrooms) > 0) ? `${l.bedrooms} slk` : '';
   const metaBits = [city, sqm, beds].filter(Boolean);
 
   return `
@@ -62,31 +71,51 @@ function listingCard(l){
   `;
 }
 
-function escapeHtml(str){
-  return (str || '').toString()
-    .replaceAll('&','&amp;')
-    .replaceAll('<','&lt;')
-    .replaceAll('>','&gt;')
-    .replaceAll('"','&quot;')
-    .replaceAll("'","&#039;");
+function getVal(id){
+  const el = document.getElementById(id);
+  return el ? el.value : '';
 }
 
-function applyFilters(listings){
-  const q = normalize(document.getElementById('q')?.value);
-  const city = normalize(document.getElementById('city')?.value);
-  const type = normalize(document.getElementById('type')?.value);
-  const maxPrice = Number(document.getElementById('maxPrice')?.value || '');
-  const minSqm = Number(document.getElementById('minSqm')?.value || '');
+function applyFiltersAndSort(listings){
+  const q = normalize(getVal('q'));
+  const city = normalize(getVal('city'));
+  const type = normalize(getVal('type'));
+  const minPrice = Number(getVal('minPrice') || '');
+  const maxPrice = Number(getVal('maxPrice') || '');
+  const minSqm = Number(getVal('minSqm') || '');
+  const minBeds = Number(getVal('minBeds') || '');
+  const sort = getVal('sort') || 'newest';
 
-  return listings.filter(l => {
+  let filtered = listings.filter(l => {
     const hay = normalize([l.title, l.city, l.type, l.short, l.description].join(' '));
     if(q && !hay.includes(q)) return false;
     if(city && normalize(l.city) !== city) return false;
     if(type && normalize(l.type) !== type) return false;
-    if(Number.isFinite(maxPrice) && maxPrice > 0 && Number(l.price) > maxPrice) return false;
-    if(Number.isFinite(minSqm) && minSqm > 0 && Number(l.sqm) < minSqm) return false;
+
+    const p = Number(l.price);
+    if(Number.isFinite(minPrice) && minPrice > 0 && Number.isFinite(p) && p < minPrice) return false;
+    if(Number.isFinite(maxPrice) && maxPrice > 0 && Number.isFinite(p) && p > maxPrice) return false;
+
+    const s = Number(l.sqm);
+    if(Number.isFinite(minSqm) && minSqm > 0 && Number.isFinite(s) && s < minSqm) return false;
+
+    const b = Number(l.bedrooms);
+    if(Number.isFinite(minBeds) && minBeds > 0 && Number.isFinite(b) && b < minBeds) return false;
+
     return true;
   });
+
+  const byDate = (a,b) => (new Date(b.postedAt || 0)) - (new Date(a.postedAt || 0));
+  const byPriceAsc = (a,b) => (Number(a.price)||0) - (Number(b.price)||0);
+  const byPriceDesc = (a,b) => (Number(b.price)||0) - (Number(a.price)||0);
+  const bySqmDesc = (a,b) => (Number(b.sqm)||0) - (Number(a.sqm)||0);
+
+  if(sort === 'price_asc') filtered.sort(byPriceAsc);
+  else if(sort === 'price_desc') filtered.sort(byPriceDesc);
+  else if(sort === 'sqm_desc') filtered.sort(bySqmDesc);
+  else filtered.sort(byDate);
+
+  return filtered;
 }
 
 function render(listings){
@@ -102,13 +131,20 @@ function render(listings){
 }
 
 function wireFilters(all){
-  const inputs = ['q','city','type','maxPrice','minSqm'].map(id => document.getElementById(id)).filter(Boolean);
-  inputs.forEach(i => i.addEventListener('input', () => render(applyFilters(all))));
+  const ids = ['q','city','type','minPrice','maxPrice','minSqm','minBeds','sort'];
+  const inputs = ids.map(id => document.getElementById(id)).filter(Boolean);
+
+  const rerender = () => render(applyFiltersAndSort(all));
+  inputs.forEach(i => i.addEventListener('input', rerender));
+  inputs.forEach(i => i.addEventListener('change', rerender));
+
   const reset = document.getElementById('resetFilters');
   if(reset){
     reset.addEventListener('click', () => {
       inputs.forEach(i => { i.value = ''; });
-      render(all);
+      const sortEl = document.getElementById('sort');
+      if(sortEl) sortEl.value = 'newest';
+      render(all.slice().sort((a,b)=> (new Date(b.postedAt||0)) - (new Date(a.postedAt||0))));
     });
   }
 }
@@ -126,9 +162,10 @@ function renderStats(all){
 (async function init(){
   try{
     const all = await loadListings();
-    renderStats(all);
-    render(all);
-    wireFilters(all);
+    const sorted = all.slice().sort((a,b)=> (new Date(b.postedAt||0)) - (new Date(a.postedAt||0)));
+    renderStats(sorted);
+    render(sorted);
+    wireFilters(sorted);
   }catch(e){
     const el = document.getElementById('listings');
     if(el){
