@@ -147,6 +147,22 @@ function wireFilters(all){
       render(all.slice().sort((a,b)=> (new Date(b.postedAt||0)) - (new Date(a.postedAt||0))));
     });
   }
+
+  const reset2 = document.getElementById('resetFilters2');
+  if(reset2 && reset){
+    reset2.addEventListener('click', () => reset.click());
+  }
+
+
+  const go = document.getElementById('goSearch');
+  if(go){
+    go.addEventListener('click', () => {
+      const w = document.getElementById('woningen');
+      if(w) w.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const qEl = document.getElementById('q');
+      if(qEl) qEl.focus();
+    });
+  }
 }
 
 function renderStats(all){
