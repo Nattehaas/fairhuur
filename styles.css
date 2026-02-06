@@ -657,3 +657,46 @@ hr{ display:none !important; }
 
 /* make listing images clean */
 .listing-media img{ aspect-ratio: 16/9; width:100%; height:auto; object-fit:cover; transform:none; }
+
+/* =========================================
+   FAIRHUUR BACKGROUND HARD RESET (NO LINES)
+   ========================================= */
+
+/* Alleen body mag kleur hebben */
+html,
+body {
+  background:
+    radial-gradient(1200px 700px at 20% -10%, rgba(124,92,255,.15), transparent 60%),
+    radial-gradient(900px 600px at 100% 10%, rgba(33,212,253,.12), transparent 60%),
+    linear-gradient(180deg, #06070d 0%, #05060c 60%, #05060c 100%);
+}
+
+/* ALLES transparant maken */
+.section,
+.section-tight-top,
+.note-box,
+.site-footer,
+.site-header,
+.container,
+.cards-grid,
+.cards-grid-spotlight,
+.listing-card,
+.listing-footer,
+.listing-body {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* kill stiekeme lijnen */
+hr,
+.section-head,
+.site-footer {
+  border: none !important;
+}
+
+/* force no pseudo overlays */
+*::before,
+*::after {
+  box-shadow: none !important;
+}
