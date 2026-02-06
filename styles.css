@@ -1,6 +1,6 @@
 :root{
-  --font-body: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  --font-hero: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  --font-hero: 'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif;
 
   --bg:#0b0d12;
   --panel:#101521;
@@ -586,3 +586,44 @@ h2{ font-weight: 800; letter-spacing:-0.01em; }
 
 .form-stack{ display:grid; gap:14px; }
 textarea{ resize: vertical; }
+
+.hero-h1{ font-family: var(--font-hero); }
+
+/* v5 Background gradient cleanup */
+:root{
+  --bg0: #070810;
+  --bg1: rgba(124,92,255,.14);
+  --bg2: rgba(33,212,253,.10);
+}
+body{
+  background:
+    radial-gradient(1100px 600px at 20% -10%, var(--bg1), transparent 60%),
+    radial-gradient(900px 520px at 90% 10%, var(--bg2), transparent 55%),
+    radial-gradient(700px 460px at 70% 110%, rgba(124,92,255,.10), transparent 60%),
+    linear-gradient(180deg, rgba(10,12,18,1), rgba(7,8,16,1) 60%, rgba(7,8,16,1));
+}
+.site-header{ border-bottom: 1px solid rgba(255,255,255,.06); }
+.section-head{ border-bottom: none !important; }
+
+/* v5 Hero centered + bigger search */
+.hero-center{ padding-top: 64px; padding-bottom: 34px; }
+.hero-center-inner{ max-width: 980px; margin: 0 auto; text-align:center; }
+.hero-h1{ font-weight: 900; font-size: clamp(42px, 6vw, 78px); line-height: 1.00; }
+.hero-sub{ margin: 14px auto 0; font-size: 20px; max-width: 62ch; color: rgba(231,233,238,.92); }
+
+.search-surface-xl{ margin: 22px auto 0; padding: 12px; border-radius: 22px; max-width: 900px; }
+.search-input-xl{ height: 58px; border-radius: 18px; font-size: 16px; padding: 0 18px; }
+.search-btn-xl{ height: 58px; border-radius: 18px; padding: 0 22px; }
+.hero-subactions-center{ justify-content:center; }
+
+/* Logo sizing without weird frame */
+.brand-logo-xl{ width:52px; height:52px; border-radius:18px; border:none; background:transparent; box-shadow:none; }
+
+/* Listing image fit */
+.listing-media img{ transform: none; }
+
+@media (max-width: 820px){
+  .hero-center{ padding-top: 54px; }
+  .hero-center-inner{ text-align:left; }
+  .hero-subactions-center{ justify-content:flex-start; }
+}

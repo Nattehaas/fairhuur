@@ -16,21 +16,6 @@ function money(n){
   return '€' + x.toLocaleString('nl-NL');
 }
 
-function sameDayISO(isoA, isoB){
-  if(!isoA || !isoB) return false;
-  return isoA.slice(0,10) === isoB.slice(0,10);
-}
-
-function calcStats(listings){
-  const live = listings.length;
-  const todayISO = new Date().toISOString();
-  const today = listings.filter(l => sameDayISO(l.postedAt || '', todayISO)).length;
-
-  const prices = listings.map(l => Number(l.price)).filter(p => Number.isFinite(p) && p > 0);
-  const avg = prices.length ? Math.round(prices.reduce((a,b)=>a+b,0) / prices.length) : null;
-  return { live, today, avg };
-}
-
 function escapeHtml(str){
   return (str || '').toString()
     .replaceAll('&','&amp;')
@@ -118,6 +103,16 @@ function applyFiltersAndSort(listings){
   return filtered;
 }
 
+function setSearchMode(isSearch){
+  const title = document.getElementById('sectionTitle');
+  const filters = document.getElementById('filtersWrap');
+  const count = document.getElementById('resultCount');
+
+  if(title) title.textContent = isSearch ? 'Resultaten' : 'Uitgelichte woningen';
+  if(filters) filters.hidden = !isSearch;
+  if(count) count.hidden = !isSearch;
+}
+
 function render(listings){
   const el = document.getElementById('listings');
   const empty = document.getElementById('emptyState');
@@ -130,11 +125,59 @@ function render(listings){
   if(empty) empty.hidden = listings.length !== 0;
 }
 
-function wireFilters(all){
-  const ids = ['q','city','type','minPrice','maxPrice','minSqm','minBeds','sort'];
+function spotlight(listings){
+  return listings.slice()
+    .sort((a,b)=> (new Date(b.postedAt||0)) - (new Date(a.postedAt||0)))
+    .slice(0,3);
+}
+
+function wireInteractions(all){
+  const qEl = document.getElementById('q');
+  const go = document.getElementById('goSearch');
+
+  const rerenderSearch = () => {
+    setSearchMode(true);
+    render(applyFiltersAndSort(all));
+    const w = document.getElementById('uitgelicht');
+    if(w) w.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  if(go){
+    go.addEventListener('click', () => {
+      if(qEl && qEl.value.trim().length){
+        rerenderSearch();
+      }else{
+        const w = document.getElementById('uitgelicht');
+        if(w) w.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  }
+
+  if(qEl){
+    qEl.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter'){
+        e.preventDefault();
+        if(qEl.value.trim().length) rerenderSearch();
+      }
+    });
+    qEl.addEventListener('input', () => {
+      const has = qEl.value.trim().length > 0;
+      if(!has){
+        setSearchMode(false);
+        render(spotlight(all));
+      }
+    });
+  }
+
+  const ids = ['city','type','minPrice','maxPrice','minSqm','minBeds','sort'];
   const inputs = ids.map(id => document.getElementById(id)).filter(Boolean);
 
-  const rerender = () => render(applyFiltersAndSort(all));
+  const rerender = () => {
+    if(qEl && qEl.value.trim().length){
+      setSearchMode(true);
+      render(applyFiltersAndSort(all));
+    }
+  };
   inputs.forEach(i => i.addEventListener('input', rerender));
   inputs.forEach(i => i.addEventListener('change', rerender));
 
@@ -142,9 +185,9 @@ function wireFilters(all){
   if(reset){
     reset.addEventListener('click', () => {
       inputs.forEach(i => { i.value = ''; });
-      const sortEl = document.getElementById('sort');
-      if(sortEl) sortEl.value = 'newest';
-      render(all.slice().sort((a,b)=> (new Date(b.postedAt||0)) - (new Date(a.postedAt||0))));
+      if(qEl) qEl.value = '';
+      setSearchMode(false);
+      render(spotlight(all));
     });
   }
 
@@ -152,36 +195,14 @@ function wireFilters(all){
   if(reset2 && reset){
     reset2.addEventListener('click', () => reset.click());
   }
-
-
-  const go = document.getElementById('goSearch');
-  if(go){
-    go.addEventListener('click', () => {
-      const w = document.getElementById('woningen');
-      if(w) w.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      const qEl = document.getElementById('q');
-      if(qEl) qEl.focus();
-    });
-  }
-}
-
-function renderStats(all){
-  const s = calcStats(all);
-  const live = document.getElementById('statLive');
-  const today = document.getElementById('statToday');
-  const avg = document.getElementById('statAvg');
-  if(live) live.textContent = String(s.live);
-  if(today) today.textContent = String(s.today);
-  if(avg) avg.textContent = s.avg ? ('€' + s.avg.toLocaleString('nl-NL')) : '-';
 }
 
 (async function init(){
   try{
     const all = await loadListings();
-    const sorted = all.slice().sort((a,b)=> (new Date(b.postedAt||0)) - (new Date(a.postedAt||0)));
-    renderStats(sorted);
-    render(sorted);
-    wireFilters(sorted);
+    setSearchMode(false);
+    render(spotlight(all));
+    wireInteractions(all);
   }catch(e){
     const el = document.getElementById('listings');
     if(el){

@@ -21,6 +21,10 @@
   <link rel="stylesheet" href="/styles.css" />
   <script defer src="/app.js"></script>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -30,19 +34,16 @@
     "description":"Huurwoningen zonder abonnement. Alle contactgegevens direct zichtbaar. Gratis reageren en gratis plaatsen."
   }
   </script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <header class="site-header">
     <div class="container header-row">
       <a class="brand" href="/">
-        <img class="brand-logo brand-logo-lg" src="/assets/logo.svg" alt="FairHuur" width="42" height="42" />
+        <img class="brand-logo brand-logo-xl" src="/assets/logo.svg" alt="FairHuur" width="52" height="52" />
         <span class="sr-only">FairHuur</span>
       </a>
       <nav class="nav">
-        <a href="#woningen">Woningen</a>
+        <a href="#uitgelicht">Woningen</a>
         <a href="/about.html">Waarom</a>
         <a href="/submit.html" class="btn btn-primary">Woning plaatsen</a>
       </nav>
@@ -50,35 +51,37 @@
   </header>
 
   <main>
-    <section class="hero hero-min">
+    <section class="hero hero-center">
       <div class="container">
-        <h1>Huurwoningen zonder abonnement.</h1>
-        <p class="lead lead-tight">Direct contact met verhuurders. Gratis reageren. Geen paywall.</p>
+        <div class="hero-center-inner">
+          <h1 class="hero-h1">Huurwoningen zonder abonnement.</h1>
+          <p class="lead lead-tight hero-sub">Direct contact met verhuurders. Gratis reageren. Geen paywall.</p>
 
-        <div class="search-surface" role="search" aria-label="Zoek woningen">
-          <label class="sr-only" for="q">Zoek</label>
-          <input id="q" class="search-input" type="search" placeholder="Zoek op stad, wijk of type. Bijv. Den Haag, studio" autocomplete="off" />
-          <button class="btn btn-primary search-btn" id="goSearch" type="button">Zoek</button>
-        </div>
+          <div class="search-surface search-surface-xl" role="search" aria-label="Zoek woningen">
+            <label class="sr-only" for="q">Zoek</label>
+            <input id="q" class="search-input search-input-xl" type="search" placeholder="Zoek op stad, wijk of type. Bijv. Den Haag, studio" autocomplete="off" />
+            <button class="btn btn-primary search-btn search-btn-xl" id="goSearch" type="button">Zoek</button>
+          </div>
 
-        <div class="hero-subactions">
-          <a class="small-link" href="#woningen">Bekijk alle woningen</a>
-          <span class="dot" aria-hidden="true"></span>
-          <a class="small-link" href="/submit.html">Plaats gratis een woning</a>
+          <div class="hero-subactions hero-subactions-center">
+            <a class="small-link" href="/submit.html">Plaats gratis een woning</a>
+            <span class="dot" aria-hidden="true"></span>
+            <a class="small-link" href="/about.html">Waarom FairHuur</a>
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="woningen" class="section section-tight-top">
+    <section id="uitgelicht" class="section section-tight-top">
       <div class="container">
         <div class="section-head">
-          <h2>Huurwoningen</h2>
+          <h2 id="sectionTitle">Uitgelichte woningen</h2>
           <div class="section-actions">
-            <span class="muted tiny" id="resultCount">0 woningen</span>
+            <span class="muted tiny" id="resultCount" hidden></span>
           </div>
         </div>
 
-        <div class="filter-bar">
+        <div class="filter-bar" id="filtersWrap" hidden>
           <label class="field field-inline">
             <span>Plaats</span>
             <input id="city" type="text" placeholder="Bijv. Den Haag" autocomplete="off" />
@@ -132,7 +135,6 @@
 
               <div class="actions-row">
                 <button id="resetFilters" class="btn btn-ghost" type="button">Reset filters</button>
-                <span class="muted tiny">Tip: hoe specifieker, hoe minder resultaten</span>
               </div>
             </div>
           </details>
@@ -141,8 +143,8 @@
         <div id="listings" class="cards-grid" aria-live="polite"></div>
 
         <div id="emptyState" class="empty" hidden>
-          <h3>Nog geen woningen in deze filters</h3>
-          <p class="muted">Reset je filters of plaats als eerste een woning.</p>
+          <h3>Geen resultaten</h3>
+          <p class="muted">Pas je zoekterm aan of reset je filters.</p>
           <div class="hero-actions" style="margin-top:12px">
             <button id="resetFilters2" class="btn btn-ghost" type="button">Reset</button>
             <a class="btn btn-primary" href="/submit.html">Plaats woning</a>
@@ -151,7 +153,7 @@
 
         <div class="note-box" style="margin-top:16px">
           <h3>Ken je een woning?</h3>
-          <p class="muted" style="margin-top:8px">Plaats hem gratis. Hoe meer aanbod, hoe beter dit werkt voor iedereen.</p>
+          <p class="muted" style="margin-top:8px">Plaats hem gratis. Hoe meer aanbod, hoe beter dit werkt.</p>
           <div class="hero-actions" style="margin-top:10px">
             <a class="btn btn-primary" href="/submit.html">Plaats gratis een woning</a>
           </div>
@@ -164,8 +166,8 @@
     <div class="container footer-grid">
       <div>
         <div class="brand brand-footer">
-          <img class="brand-logo" src="/assets/logo.svg" alt="FairHuur" width="34" height="34" />
-          <span class="brand-name">FairHuur</span>
+          <img class="brand-logo brand-logo-lg" src="/assets/logo.svg" alt="FairHuur" width="42" height="42" />
+          <span class="sr-only">FairHuur</span>
         </div>
         <p class="muted tiny">Eerlijk huren, zonder abonnement.</p>
         <p class="muted tiny" style="margin-top:8px">Veiligheid: betaal nooit vooraf zonder contract. Check identiteit en adres.</p>
@@ -174,9 +176,9 @@
         <a href="/about.html">Waarom</a>
         <a href="/submit.html">Woning plaatsen</a>
         <a href="/privacy.html">Privacy</a>
-</div>
+      </div>
       <div class="muted tiny footer-note">
-        Tip: Deel FairHuur met je netwerk. Hoe meer aanbod, hoe beter.
+        Tip: Deel FairHuur. Hoe meer aanbod, hoe beter.
       </div>
     </div>
   </footer>

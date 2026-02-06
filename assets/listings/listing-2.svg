@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#21d4fd"/>
+      <stop offset="1" stop-color="#7c5cff"/>
+    </linearGradient>
+    <radialGradient id="r" cx="70%" cy="20%" r="70%">
+      <stop offset="0" stop-color="rgba(255,255,255,.22)"/>
+      <stop offset="1" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="675" rx="40" fill="url(#g)"/>
+  <rect width="1200" height="675" rx="40" fill="url(#r)"/>
+  <circle cx="980" cy="160" r="220" fill="rgba(0,0,0,.16)"/>
+  <circle cx="240" cy="560" r="260" fill="rgba(0,0,0,.10)"/>
+  <g transform="translate(560,150)">
+    <rect x="0" y="0" width="420" height="420" rx="36" fill="rgba(10,12,18,.25)"/>
+    <g transform="translate(90,92)" fill="rgba(255,255,255,.85)">
+      <path d="M86 136h84v10H86zM100 146h8v44h-8zM148 146h8v44h-8zM92 190h72v8H92z"/>
+    </g>
+  </g>
+  <g font-family="Plus Jakarta Sans, Arial" fill="rgba(255,255,255,.95)">
+    <text x="90" y="520" font-size="54" font-weight="800">Appartement</text>
+    <text x="90" y="575" font-size="28" font-weight="600" fill="rgba(255,255,255,.85)">Rotterdam</text>
+  </g>
+</svg>

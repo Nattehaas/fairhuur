@@ -15,7 +15,7 @@
       "contactEmail": "verhuurder@example.com",
       "contactPhone": "+31 6 12345678",
       "contactUrl": "",
-      "imageUrl": "",
+      "imageUrl": "/assets/listings/listing-1.svg",
       "postedAt": "2026-02-06T10:32:20.386653",
       "active": true
     },
@@ -34,7 +34,7 @@
       "contactEmail": "contact@example.com",
       "contactPhone": "",
       "contactUrl": "https://example.com",
-      "imageUrl": "",
+      "imageUrl": "/assets/listings/listing-2.svg",
       "postedAt": "2026-02-05T10:32:20.386687",
       "active": true
     },
@@ -53,7 +53,7 @@
       "contactEmail": "",
       "contactPhone": "+31 6 87654321",
       "contactUrl": "",
-      "imageUrl": "",
+      "imageUrl": "/assets/listings/listing-3.svg",
       "postedAt": "2026-02-03T10:32:20.386714",
       "active": true
     }
