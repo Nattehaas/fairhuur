@@ -103,17 +103,25 @@ function applyFiltersAndSort(listings){
   return filtered;
 }
 
-function setSearchMode(isSearch){
+function spotlight(listings){
+  return listings.slice()
+    .sort((a,b)=> (new Date(b.postedAt||0)) - (new Date(a.postedAt||0)))
+    .slice(0,3);
+}
+
+function setMode(isSearch){
   const title = document.getElementById('sectionTitle');
-  const filters = document.getElementById('filtersWrap');
+  const filters = document.getElementById('searchFilters');
   const count = document.getElementById('resultCount');
+  const nav = document.getElementById('spotlightNav');
 
   if(title) title.textContent = isSearch ? 'Resultaten' : 'Uitgelichte woningen';
   if(filters) filters.hidden = !isSearch;
   if(count) count.hidden = !isSearch;
+  if(nav) nav.style.visibility = isSearch ? 'hidden' : 'visible';
 }
 
-function render(listings){
+function render(listings, showCount){
   const el = document.getElementById('listings');
   const empty = document.getElementById('emptyState');
   const count = document.getElementById('resultCount');
@@ -121,33 +129,34 @@ function render(listings){
   if(!el) return;
 
   el.innerHTML = listings.map(listingCard).join('');
-  if(count) count.textContent = `${listings.length} woningen`;
+  if(count && showCount) count.textContent = `${listings.length} woningen`;
   if(empty) empty.hidden = listings.length !== 0;
 }
 
-function spotlight(listings){
-  return listings.slice()
-    .sort((a,b)=> (new Date(b.postedAt||0)) - (new Date(a.postedAt||0)))
-    .slice(0,3);
+function scrollSpot(direction){
+  const el = document.getElementById('listings');
+  if(!el) return;
+  const amount = Math.min(420, el.clientWidth * 0.8);
+  el.scrollBy({ left: direction * amount, behavior: 'smooth' });
 }
 
 function wireInteractions(all){
   const qEl = document.getElementById('q');
   const go = document.getElementById('goSearch');
 
-  const rerenderSearch = () => {
-    setSearchMode(true);
-    render(applyFiltersAndSort(all));
-    const w = document.getElementById('uitgelicht');
-    if(w) w.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const doSearch = () => {
+    setMode(true);
+    render(applyFiltersAndSort(all), true);
   };
 
   if(go){
     go.addEventListener('click', () => {
       if(qEl && qEl.value.trim().length){
-        rerenderSearch();
+        doSearch();
+        const w = document.getElementById('spotlight');
+        if(w) w.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }else{
-        const w = document.getElementById('uitgelicht');
+        const w = document.getElementById('spotlight');
         if(w) w.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     });
@@ -157,25 +166,27 @@ function wireInteractions(all){
     qEl.addEventListener('keydown', (e) => {
       if(e.key === 'Enter'){
         e.preventDefault();
-        if(qEl.value.trim().length) rerenderSearch();
+        if(qEl.value.trim().length) doSearch();
       }
     });
     qEl.addEventListener('input', () => {
       const has = qEl.value.trim().length > 0;
-      if(!has){
-        setSearchMode(false);
-        render(spotlight(all));
+      if(has){
+        // show filters but don't run search until click/enter (keeps spotlight clean)
+        const filters = document.getElementById('searchFilters');
+        if(filters) filters.hidden = false;
+      }else{
+        setMode(false);
+        render(spotlight(all), false);
       }
     });
   }
 
   const ids = ['city','type','minPrice','maxPrice','minSqm','minBeds','sort'];
   const inputs = ids.map(id => document.getElementById(id)).filter(Boolean);
-
   const rerender = () => {
     if(qEl && qEl.value.trim().length){
-      setSearchMode(true);
-      render(applyFiltersAndSort(all));
+      doSearch();
     }
   };
   inputs.forEach(i => i.addEventListener('input', rerender));
@@ -186,22 +197,26 @@ function wireInteractions(all){
     reset.addEventListener('click', () => {
       inputs.forEach(i => { i.value = ''; });
       if(qEl) qEl.value = '';
-      setSearchMode(false);
-      render(spotlight(all));
+      setMode(false);
+      render(spotlight(all), false);
     });
   }
-
   const reset2 = document.getElementById('resetFilters2');
   if(reset2 && reset){
     reset2.addEventListener('click', () => reset.click());
   }
+
+  const prev = document.getElementById('spotPrev');
+  const next = document.getElementById('spotNext');
+  if(prev) prev.addEventListener('click', () => scrollSpot(-1));
+  if(next) next.addEventListener('click', () => scrollSpot(1));
 }
 
 (async function init(){
   try{
     const all = await loadListings();
-    setSearchMode(false);
-    render(spotlight(all));
+    setMode(false);
+    render(spotlight(all), false);
     wireInteractions(all);
   }catch(e){
     const el = document.getElementById('listings');

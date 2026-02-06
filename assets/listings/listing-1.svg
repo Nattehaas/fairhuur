@@ -11,16 +11,16 @@
   </defs>
   <rect width="1200" height="675" rx="40" fill="url(#g)"/>
   <rect width="1200" height="675" rx="40" fill="url(#r)"/>
-  <circle cx="980" cy="160" r="220" fill="rgba(0,0,0,.16)"/>
+  <circle cx="980" cy="160" r="220" fill="rgba(0,0,0,.14)"/>
   <circle cx="240" cy="560" r="260" fill="rgba(0,0,0,.10)"/>
   <g transform="translate(560,150)">
-    <rect x="0" y="0" width="420" height="420" rx="36" fill="rgba(10,12,18,.25)"/>
-    <g transform="translate(90,92)" fill="rgba(255,255,255,.85)">
+    <rect x="0" y="0" width="420" height="420" rx="36" fill="rgba(10,12,18,.22)"/>
+    <g transform="translate(90,92)" fill="rgba(255,255,255,.88)">
       <path d="M92 128h72v54H92zM104 140h20v18h-20zM132 140h20v18h-20zM160 140h-20v18h20z"/>
     </g>
   </g>
-  <g font-family="Plus Jakarta Sans, Arial" fill="rgba(255,255,255,.95)">
+  <g font-family="Plus Jakarta Sans, Arial" fill="rgba(255,255,255,.96)">
     <text x="90" y="520" font-size="54" font-weight="800">Studio</text>
-    <text x="90" y="575" font-size="28" font-weight="600" fill="rgba(255,255,255,.85)">Den Haag</text>
+    <text x="90" y="575" font-size="28" font-weight="600" fill="rgba(255,255,255,.86)">Den Haag</text>
   </g>
 </svg>

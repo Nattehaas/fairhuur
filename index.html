@@ -43,7 +43,7 @@
         <span class="sr-only">FairHuur</span>
       </a>
       <nav class="nav">
-        <a href="#uitgelicht">Woningen</a>
+        <a href="#spotlight">Woningen</a>
         <a href="/about.html">Waarom</a>
         <a href="/submit.html" class="btn btn-primary">Woning plaatsen</a>
       </nav>
@@ -63,6 +63,64 @@
             <button class="btn btn-primary search-btn search-btn-xl" id="goSearch" type="button">Zoek</button>
           </div>
 
+          <!-- Search-only filters -->
+          <div id="searchFilters" class="search-filters" hidden>
+            <div class="search-filters-row">
+              <label class="field field-inline">
+                <span>Plaats</span>
+                <input id="city" type="text" placeholder="Bijv. Den Haag" autocomplete="off" />
+              </label>
+              <label class="field field-inline">
+                <span>Type</span>
+                <select id="type">
+                  <option value="">Alles</option>
+                  <option>Appartement</option>
+                  <option>Studio</option>
+                  <option>Huis</option>
+                  <option>Kamer</option>
+                </select>
+              </label>
+              <details class="filters-advanced">
+                <summary class="btn btn-ghost">Meer filters</summary>
+                <div class="filters-panel">
+                  <div class="grid-2">
+                    <label class="field">
+                      <span>Min. prijs (p/m)</span>
+                      <input id="minPrice" type="number" min="0" step="50" placeholder="Bijv. 800" />
+                    </label>
+                    <label class="field">
+                      <span>Max. prijs (p/m)</span>
+                      <input id="maxPrice" type="number" min="0" step="50" placeholder="Bijv. 1500" />
+                    </label>
+                  </div>
+                  <div class="grid-2">
+                    <label class="field">
+                      <span>Min. m²</span>
+                      <input id="minSqm" type="number" min="0" step="5" placeholder="Bijv. 40" />
+                    </label>
+                    <label class="field">
+                      <span>Min. slaapkamers</span>
+                      <input id="minBeds" type="number" min="0" step="1" placeholder="Bijv. 2" />
+                    </label>
+                  </div>
+                  <label class="field">
+                    <span>Sorteren</span>
+                    <select id="sort">
+                      <option value="newest">Nieuwste eerst</option>
+                      <option value="price_asc">Prijs: laag naar hoog</option>
+                      <option value="price_desc">Prijs: hoog naar laag</option>
+                      <option value="sqm_desc">Oppervlakte: groot naar klein</option>
+                    </select>
+                  </label>
+                  <div class="actions-row">
+                    <button id="resetFilters" class="btn btn-ghost" type="button">Reset</button>
+                  </div>
+                </div>
+              </details>
+            </div>
+            <div class="tiny muted" style="margin-top:10px" id="resultCount" hidden></div>
+          </div>
+
           <div class="hero-subactions hero-subactions-center">
             <a class="small-link" href="/submit.html">Plaats gratis een woning</a>
             <span class="dot" aria-hidden="true"></span>
@@ -72,75 +130,17 @@
       </div>
     </section>
 
-    <section id="uitgelicht" class="section section-tight-top">
+    <section id="spotlight" class="section section-tight-top">
       <div class="container">
         <div class="section-head">
           <h2 id="sectionTitle">Uitgelichte woningen</h2>
-          <div class="section-actions">
-            <span class="muted tiny" id="resultCount" hidden></span>
+          <div class="section-actions" id="spotlightNav">
+            <button class="btn btn-ghost" id="spotPrev" type="button" aria-label="Vorige">←</button>
+            <button class="btn btn-ghost" id="spotNext" type="button" aria-label="Volgende">→</button>
           </div>
         </div>
 
-        <div class="filter-bar" id="filtersWrap" hidden>
-          <label class="field field-inline">
-            <span>Plaats</span>
-            <input id="city" type="text" placeholder="Bijv. Den Haag" autocomplete="off" />
-          </label>
-
-          <label class="field field-inline">
-            <span>Type</span>
-            <select id="type">
-              <option value="">Alles</option>
-              <option>Appartement</option>
-              <option>Studio</option>
-              <option>Huis</option>
-              <option>Kamer</option>
-            </select>
-          </label>
-
-          <details class="filters-advanced">
-            <summary class="btn btn-ghost">Meer filters</summary>
-            <div class="filters-panel">
-              <div class="grid-2">
-                <label class="field">
-                  <span>Min. prijs (p/m)</span>
-                  <input id="minPrice" type="number" min="0" step="50" placeholder="Bijv. 800" />
-                </label>
-                <label class="field">
-                  <span>Max. prijs (p/m)</span>
-                  <input id="maxPrice" type="number" min="0" step="50" placeholder="Bijv. 1500" />
-                </label>
-              </div>
-
-              <div class="grid-2">
-                <label class="field">
-                  <span>Min. m²</span>
-                  <input id="minSqm" type="number" min="0" step="5" placeholder="Bijv. 40" />
-                </label>
-                <label class="field">
-                  <span>Min. slaapkamers</span>
-                  <input id="minBeds" type="number" min="0" step="1" placeholder="Bijv. 2" />
-                </label>
-              </div>
-
-              <label class="field">
-                <span>Sorteren</span>
-                <select id="sort">
-                  <option value="newest">Nieuwste eerst</option>
-                  <option value="price_asc">Prijs: laag naar hoog</option>
-                  <option value="price_desc">Prijs: hoog naar laag</option>
-                  <option value="sqm_desc">Oppervlakte: groot naar klein</option>
-                </select>
-              </label>
-
-              <div class="actions-row">
-                <button id="resetFilters" class="btn btn-ghost" type="button">Reset filters</button>
-              </div>
-            </div>
-          </details>
-        </div>
-
-        <div id="listings" class="cards-grid" aria-live="polite"></div>
+        <div id="listings" class="cards-grid cards-grid-spotlight" aria-live="polite"></div>
 
         <div id="emptyState" class="empty" hidden>
           <h3>Geen resultaten</h3>

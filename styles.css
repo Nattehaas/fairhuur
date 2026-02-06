@@ -587,9 +587,13 @@ h2{ font-weight: 800; letter-spacing:-0.01em; }
 .form-stack{ display:grid; gap:14px; }
 textarea{ resize: vertical; }
 
-.hero-h1{ font-family: var(--font-hero); }
+/* v6 typography */
+body{ font-family: var(--font-body); }
+.hero-h1, h1{ font-family: var(--font-hero); letter-spacing:-0.02em; }
+h1{ font-weight: 900; }
+.btn{ font-weight: 800; }
 
-/* v5 Background gradient cleanup */
+/* v6 background cleanup: remove harsh band/line */
 :root{
   --bg0: #070810;
   --bg1: rgba(124,92,255,.14);
@@ -597,33 +601,59 @@ textarea{ resize: vertical; }
 }
 body{
   background:
-    radial-gradient(1100px 600px at 20% -10%, var(--bg1), transparent 60%),
-    radial-gradient(900px 520px at 90% 10%, var(--bg2), transparent 55%),
-    radial-gradient(700px 460px at 70% 110%, rgba(124,92,255,.10), transparent 60%),
-    linear-gradient(180deg, rgba(10,12,18,1), rgba(7,8,16,1) 60%, rgba(7,8,16,1));
+    radial-gradient(1200px 680px at 18% -12%, var(--bg1), transparent 62%),
+    radial-gradient(980px 560px at 92% 8%, var(--bg2), transparent 58%),
+    radial-gradient(900px 520px at 60% 115%, rgba(124,92,255,.08), transparent 60%),
+    linear-gradient(180deg, rgba(10,12,18,1), rgba(7,8,16,1) 65%, rgba(7,8,16,1));
 }
+/* kill any section overlay lines */
+.section, .site-footer, .note-box{ background: transparent !important; }
+.site-footer{ border-top: none !important; }
 .site-header{ border-bottom: 1px solid rgba(255,255,255,.06); }
-.section-head{ border-bottom: none !important; }
+.section-head{ border-bottom: none !important; box-shadow: none !important; }
+hr{ display:none !important; }
 
-/* v5 Hero centered + bigger search */
-.hero-center{ padding-top: 64px; padding-bottom: 34px; }
+/* v6 hero */
+.hero-center{ padding-top: 64px; padding-bottom: 26px; }
 .hero-center-inner{ max-width: 980px; margin: 0 auto; text-align:center; }
-.hero-h1{ font-weight: 900; font-size: clamp(42px, 6vw, 78px); line-height: 1.00; }
+.hero-h1{ font-size: clamp(44px, 6vw, 80px); line-height: 1.00; }
 .hero-sub{ margin: 14px auto 0; font-size: 20px; max-width: 62ch; color: rgba(231,233,238,.92); }
 
-.search-surface-xl{ margin: 22px auto 0; padding: 12px; border-radius: 22px; max-width: 900px; }
-.search-input-xl{ height: 58px; border-radius: 18px; font-size: 16px; padding: 0 18px; }
-.search-btn-xl{ height: 58px; border-radius: 18px; padding: 0 22px; }
+/* v6 search and search-only filters */
+.search-surface-xl{ margin: 22px auto 0; padding: 12px; border-radius: 22px; max-width: 920px; }
+.search-input-xl{ height: 60px; border-radius: 18px; font-size: 16px; padding: 0 18px; }
+.search-btn-xl{ height: 60px; border-radius: 18px; padding: 0 24px; }
+.search-filters{ margin: 14px auto 0; max-width: 920px; text-align:left; }
+.search-filters-row{ display:flex; gap:12px; align-items:flex-end; flex-wrap:wrap; justify-content:center; }
+.search-filters .field-inline{ min-width: 200px; flex: 1; }
+.filters-advanced{ flex: 0 0 auto; }
 .hero-subactions-center{ justify-content:center; }
 
-/* Logo sizing without weird frame */
+/* v6 logo sizing */
 .brand-logo-xl{ width:52px; height:52px; border-radius:18px; border:none; background:transparent; box-shadow:none; }
 
-/* Listing image fit */
-.listing-media img{ transform: none; }
-
+/* v6 spotlight row */
+.cards-grid-spotlight{
+  display:flex;
+  gap:16px;
+  overflow-x:auto;
+  padding-bottom: 8px;
+  scroll-snap-type: x mandatory;
+}
+.cards-grid-spotlight::-webkit-scrollbar{ height: 10px; }
+.cards-grid-spotlight::-webkit-scrollbar-thumb{ background: rgba(255,255,255,.12); border-radius: 999px; }
+.cards-grid-spotlight .listing-card{
+  min-width: 340px;
+  max-width: 360px;
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+}
 @media (max-width: 820px){
-  .hero-center{ padding-top: 54px; }
   .hero-center-inner{ text-align:left; }
   .hero-subactions-center{ justify-content:flex-start; }
+  .search-filters-row{ justify-content:flex-start; }
+  .cards-grid-spotlight .listing-card{ min-width: 300px; }
 }
+
+/* make listing images clean */
+.listing-media img{ aspect-ratio: 16/9; width:100%; height:auto; object-fit:cover; transform:none; }

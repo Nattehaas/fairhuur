@@ -9,10 +9,22 @@
     </filter>
   </defs>
 
+  <!-- rounded app icon -->
   <rect x="24" y="24" width="208" height="208" rx="52" fill="url(#bg)" filter="url(#soft)"/>
-  <path d="M78 124L128 86l50 38v62c0 10-8 18-18 18H96c-10 0-18-8-18-18v-62z" fill="rgba(10,12,18,.92)"/>
-  <path d="M112 204v-38c0-8 6-14 14-14h4c8 0 14 6 14 14v38" fill="rgba(10,12,18,.92)"/>
 
-  <circle cx="178" cy="98" r="22" fill="rgba(10,12,18,.95)"/>
-  <path d="M170 98l6 6 14-14" fill="none" stroke="rgba(255,255,255,.95)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- house -->
+  <path d="M78 126L128 86l50 40v62c0 10-8 18-18 18H96c-10 0-18-8-18-18v-62z"
+        fill="rgba(10,12,18,.92)"/>
+  <path d="M112 206v-38c0-8 6-14 14-14h4c8 0 14 6 14 14v38" fill="rgba(10,12,18,.92)"/>
+
+  <!-- big checkmark over house -->
+  <path d="M92 150 L118 176 L172 116"
+        fill="none" stroke="rgba(255,255,255,.96)" stroke-width="18"
+        stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- chimney segment: part of the long arm that sticks above the roof, in house color -->
+  <!-- roof top is around y=86..126; the check arm crosses around y~116, so chimney is the part above y~118 near x~160 -->
+  <path d="M164 124 L176 112"
+        fill="none" stroke="rgba(10,12,18,.92)" stroke-width="18"
+        stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
