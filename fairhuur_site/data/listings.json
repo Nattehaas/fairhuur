@@ -1,0 +1,61 @@
+{
+  "listings": [
+    {
+      "id": "denhaag-studio-001",
+      "title": "Studio nabij HS, all-in",
+      "city": "Den Haag",
+      "type": "Studio",
+      "price": 1150,
+      "sqm": 28,
+      "bedrooms": 0,
+      "deposit": 1150,
+      "availableFrom": "Per direct",
+      "short": "Compacte studio met eigen keuken en badkamer. Loopafstand van OV.",
+      "description": "Mooie studio met eigen keuken en badkamer.\nGeschikt voor 1 persoon.\nLet op: inschrijving in overleg.",
+      "contactEmail": "verhuurder@example.com",
+      "contactPhone": "+31 6 12345678",
+      "contactUrl": "",
+      "imageUrl": "",
+      "postedAt": "2026-02-06T10:32:20.386653",
+      "active": true
+    },
+    {
+      "id": "rotterdam-app-002",
+      "title": "Appartement 2 slk, balkon",
+      "city": "Rotterdam",
+      "type": "Appartement",
+      "price": 1850,
+      "sqm": 74,
+      "bedrooms": 2,
+      "deposit": 1850,
+      "availableFrom": "01-03-2026",
+      "short": "Licht appartement met balkon, vlakbij metro.",
+      "description": "Ruim en licht appartement.\nOpen keuken.\nBalkon op het zuiden.",
+      "contactEmail": "contact@example.com",
+      "contactPhone": "",
+      "contactUrl": "https://example.com",
+      "imageUrl": "",
+      "postedAt": "2026-02-05T10:32:20.386687",
+      "active": true
+    },
+    {
+      "id": "utrecht-kamer-003",
+      "title": "Kamer in gedeeld huis",
+      "city": "Utrecht",
+      "type": "Kamer",
+      "price": 650,
+      "sqm": 14,
+      "bedrooms": 1,
+      "deposit": 650,
+      "availableFrom": "15-02-2026",
+      "short": "Kamer in gezellig huis. Gedeelde keuken en badkamer.",
+      "description": "Kamer in gedeelde woning.\nRoken niet toegestaan.\nHuisdieren in overleg.",
+      "contactEmail": "",
+      "contactPhone": "+31 6 87654321",
+      "contactUrl": "",
+      "imageUrl": "",
+      "postedAt": "2026-02-03T10:32:20.386714",
+      "active": true
+    }
+  ]
+}

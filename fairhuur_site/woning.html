@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Woning - FairHuur</title>
+  <meta name="description" content="Woningdetails op FairHuur. Alle info en contactgegevens direct zichtbaar." />
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css" />
+  <script defer src="/woning.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="/">
+        <span class="brand-mark" aria-hidden="true">🏠</span>
+        <span class="brand-name">FairHuur</span>
+      </a>
+      <nav class="nav">
+        <a href="/#woningen">Woningen</a>
+        <a href="/submit.html" class="btn btn-ghost">Woning plaatsen</a>
+        <a href="/about.html" class="btn btn-primary">Waarom FairHuur</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <a class="back" href="/#woningen">← Terug naar overzicht</a>
+
+      <div id="woning" class="woning" aria-live="polite">
+        <div class="card">
+          <div class="card-body">
+            <div class="skeleton" style="height:22px;width:50%"></div>
+            <div class="skeleton" style="height:14px;width:70%;margin-top:10px"></div>
+            <div class="skeleton" style="height:220px;width:100%;margin-top:16px"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="note-box">
+        <h3>Veilig huren</h3>
+        <ul class="bullets">
+          <li>Betaal nooit contant zonder bewijs.</li>
+          <li>Vraag om legitimatie en controleer het adres.</li>
+          <li>Lees het huurcontract volledig. Let op borg en opzegtermijn.</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="muted tiny">© <span id="year"></span> FairHuur</div>
+      <div class="footer-links">
+        <a href="/privacy.html">Privacy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
