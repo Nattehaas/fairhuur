@@ -1,4 +1,7 @@
 :root{
+  --font-body: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  --font-hero: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+
   --bg:#0b0d12;
   --panel:#101521;
   --panel2:#0f1320;
@@ -540,3 +543,46 @@ input:focus, select:focus{
     min-width: 160px;
   }
 }
+
+body{ font-family: var(--font-body); }
+
+.hero-title, h1{ font-family: var(--font-hero); letter-spacing:-0.02em; }
+
+.brand-logo-lg{ width:42px; height:42px; border-radius:14px; }
+
+/* Bold, simple, in-your-face */
+h1{ font-weight: 800; font-size: clamp(36px, 5vw, 64px); line-height: 1.02; }
+h2{ font-weight: 800; letter-spacing:-0.01em; }
+.lead{ font-size: 18px; }
+.btn{ font-weight: 800; }
+.btn-primary{ transform: translateY(0); box-shadow: 0 16px 44px rgba(33,212,253,.18); }
+.btn-primary:hover{ transform: translateY(-1px); }
+.site-header{ backdrop-filter: blur(12px); }
+.brand{ display:flex; align-items:center; gap:0; }
+.brand-name{ display:none !important; }
+
+/* Cards polish */
+.cards-grid{ gap: 16px; }
+.listing-card{
+  border-radius: 18px;
+  box-shadow: 0 18px 60px rgba(0,0,0,.35);
+  border: 1px solid rgba(255,255,255,.08);
+}
+.listing-media{
+  border-radius: 18px 18px 0 0;
+  overflow:hidden;
+}
+.listing-media img{
+  aspect-ratio: 16 / 9;
+  width:100%;
+  height:auto;
+  display:block;
+  object-fit: cover;
+  transform: scale(1.02);
+}
+.listing-title{ font-weight: 800; }
+.price{ font-weight: 900; letter-spacing:-0.01em; }
+.pill{ font-weight: 800; }
+
+.form-stack{ display:grid; gap:14px; }
+textarea{ resize: vertical; }
