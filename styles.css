@@ -289,11 +289,7 @@ input:focus, select:focus{
   background: rgba(255,255,255,.03);
 }
 
-.site-footer{
-  border-top:1px solid var(--line);
-  padding: 24px 0;
-  background: rgba(11,13,18,.35);
-}
+.site-footer{ background: transparent; border: none; }
 .footer-grid{
   display:grid;
   grid-template-columns: 1fr auto auto;
@@ -608,7 +604,7 @@ body{
 }
 /* kill any section overlay lines */
 .section, .site-footer, .note-box{ background: transparent !important; }
-.site-footer{ border-top: none !important; }
+.site-footer{ background: transparent; border: none; }
 .site-header{ border-bottom: 1px solid rgba(255,255,255,.06); }
 .section-head{ border-bottom: none !important; box-shadow: none !important; }
 hr{ display:none !important; }
@@ -640,8 +636,6 @@ hr{ display:none !important; }
   padding-bottom: 8px;
   scroll-snap-type: x mandatory;
 }
-.cards-grid-spotlight::-webkit-scrollbar{ height: 10px; }
-.cards-grid-spotlight::-webkit-scrollbar-thumb{ background: rgba(255,255,255,.12); border-radius: 999px; }
 .cards-grid-spotlight .listing-card{
   min-width: 340px;
   max-width: 360px;
@@ -691,12 +685,58 @@ body {
 /* kill stiekeme lijnen */
 hr,
 .section-head,
-.site-footer {
-  border: none !important;
-}
+.site-footer{ background: transparent; border: none; }
 
 /* force no pseudo overlays */
 *::before,
 *::after {
   box-shadow: none !important;
+}
+
+
+
+/* ================================
+   FAIRHUUR v7 BACKGROUND CLEAN FIX
+   ================================ */
+
+/* hide horizontal scrollbar completely */
+.cards-grid-spotlight{
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.cards-grid-spotlight::-webkit-scrollbar{
+  height: 0 !important;
+  display:none !important;
+}
+
+/* only body paints the background */
+html, body{
+  background:
+    radial-gradient(1200px 700px at 20% -10%, rgba(124,92,255,.15), transparent 60%),
+    radial-gradient(900px 600px at 100% 10%, rgba(33,212,253,.12), transparent 60%),
+    linear-gradient(180deg,#06070d 0%,#05060c 100%);
+}
+
+/* all containers transparent to prevent banding */
+.section,
+.section-tight-top,
+.note-box,
+.container,
+.listing-card,
+.listing-footer,
+.listing-body{
+  background: transparent !important;
+  border:none !important;
+  box-shadow:none !important;
+}
+
+/* smooth footer blend */
+.site-footer{
+  background:
+    linear-gradient(180deg,
+      rgba(6,7,13,0) 0%,
+      rgba(6,7,13,.35) 40%,
+      rgba(6,7,13,.8) 100%
+    ) !important;
 }
